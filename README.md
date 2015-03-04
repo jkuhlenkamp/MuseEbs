@@ -1,15 +1,12 @@
-Ansible Playbook to   - provision an EC2-instance with custom storage configuration
-					            - run fio tests
-					            - transfer results to S3 bucket
+Ansible Playbook to   
+- provision an EC2-instance with custom storage configuration
+- run fio tests
+- transfer results to S3 bucket
 
 Requires Ansible and Boto
 
-1. Clone repository
-	-> git clone https://github.com/jkuhlenkamp/fioebs/
-2. Export Credentials
-	-> export AWS_ACCESS_KEY_ID=xxx
-	-> export AWS_SECRET_ACCESS_KEY=xxx
-
+1. Clone repository "git clone https://github.com/jkuhlenkamp/fioebs/"
+2. Export Credentials "export AWS_ACCESS_KEY_ID=xxx" "export AWS_SECRET_ACCESS_KEY=xxx"
 3. Adapt "fiobs/exp/env.yml"
 	3.1 Choose workload job file
 	3.2 Adapt the AWS settings 
