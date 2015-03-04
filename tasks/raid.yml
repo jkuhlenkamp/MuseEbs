@@ -12,7 +12,7 @@
 
 # - debug: var=raid_type
 
-- name: "Check for existing device: /dev/md0"
+- name: "Check for existing device: /dev/md0 - allowed to echo errors"
   sudo: yes
   command: mdadm -D /dev/md0
   ignore_errors: yes
