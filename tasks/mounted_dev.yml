@@ -3,7 +3,7 @@
 # Create FS and mount block storage device under test
 
 
-- name: "Check for mounted device at mountpoint: /home/ubuntu/fio"
+- name: "Check for mounted device at mountpoint: /home/ubuntu/fio - allowed to echo errors"
   sudo: yes
   command: mountpoint -q /home/ubuntu/fio
   ignore_errors: yes
