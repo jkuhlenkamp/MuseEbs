@@ -1,0 +1,68 @@
+---
+# file: tasks/raid.yml
+# Configure a RAID on a remote machine in the testbed
+
+- name: Install mdadm
+  sudo: yes
+  apt: name=mdadm state=present update_cache=yes
+
+# - name: Setting up software raid
+#   sudo: yes
+#   debug: var=ebs_volumes
+
+# - debug: var=raid_type
+
+- name: "Check for existing device: /dev/md0"
+  sudo: yes
+  command: mdadm -D /dev/md0
+  ignore_errors: yes
+  register: dev_exists
+
+- name: "Create device: /dev/md0"
+  sudo: yes
+  command: "mdadm --create /dev/md0 --auto md --level=0 --raid-devices=2 /dev/xvdb /dev/xvdc"
+  when: dev_exists.rc != 0
+
+- include: mounted_dev.yml
+
+# - name: "Check for mounted device at mountpoint: /home/ubuntu/fio"
+#   sudo: yes
+#   command: mountpoint -q /home/ubuntu/fio
+#   ignore_errors: yes
+#   register: is_mounted
+
+# - name: "Create filesystem for device: /dev/md0"
+#   sudo: yes
+#   filesystem: >
+#     fstype=ext4
+#     dev=/dev/md0
+#     force=no
+#     opts="-b 4096"
+#   when: is_mounted.rc != 0
+
+# - name: Create mount dir '/home/ubuntu/fio'
+#   file: >
+#     path=/home/ubuntu/fio
+#     state=directory
+#     recurse=yes
+#     owner=ubuntu
+#     group=ubuntu
+#     mode="0755"
+#   when: is_mounted.rc != 0
+
+# - name: Mount device under mount point
+#   sudo: yes
+#   mount: >
+#     name=/home/ubuntu/fio
+#     src=/dev/md0
+#     fstype=ext4
+#     opts=noatime,nodiratime,discard
+#   when: is_mounted.rc != 0
+
+# - name: Change ownership to experiment user
+#   sudo: yes
+#   shell: "chown ubuntu:ubuntu /home/ubuntu/fio/"
+
+# - name: Change ownership to experiment user
+#   sudo: yes
+#   shell: "chown ubuntu:ubuntu /home/ubuntu/fio/lost+found/"
