@@ -77,6 +77,28 @@
   roles:
   - role: fio
 
+- name: Update the machine
+  hosts: testbed
+  remote_user: ubuntu
+  gather_facts: yes
+  vars_files:
+  - exp/env.yml
+  - group_vars/ubuntu
+  tasks:
+    - name: Update
+      shell: sudo apt-get update
+
+- name: Gather and save facts
+  hosts: testbed
+  remote_user: ubuntu
+  gather_facts: yes
+  vars_files:
+  - exp/env.yml
+  - group_vars/ubuntu
+  tasks:
+    - name: Gather and save machine facts
+      shell: ansible all -m setup --tree /tmp/facts -i /home/ubuntu/workloads/inv > /home/ubuntu/facts.txt
+
 - name: Execute FIO benchmark
   hosts: testbed
   remote_user: ubuntu
