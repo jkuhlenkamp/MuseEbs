@@ -19,4 +19,5 @@ aws s3 cp {{ home_dir }}/lat_clat.log $s3_dir --region=eu-central-1
 aws s3 cp {{ home_dir }}/lat_lat.log $s3_dir --region=eu-central-1
 aws s3 cp {{ home_dir }}/lat_slat.log $s3_dir --region=eu-central-1
 aws s3 cp {{ workload_dir }}/{{ wl_name }} $s3_dir --region=eu-central-1
+aws s3 cp {{ home_dir }}/facts.txt $s3_dir --region=eu-central-1
 exit
