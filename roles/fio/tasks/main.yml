@@ -41,6 +41,23 @@
     owner={{ user }}
     group={{ user }}
     mode=0777
+    
+- name: "Create inv dir: ../workloads/inv"
+  file: >
+    path={{ workload_dir }}/inv
+    state=directory
+    recurse=yes
+    owner={{ user }}
+    group={{ user }}
+    mode="0775"
+
+- name: "Create localhost file: hosts"
+  template: >
+    src=hosts.j2
+    dest="{{ workload_dir }}/inv/hosts"
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
 
 - name: "Install package: python-pip"
   sudo: true
@@ -53,6 +70,10 @@
 - name: "Install package: awscli"
   sudo: true
   pip: name=awscli state=latest
+
+- name: "Install package: ansible"
+  sudo: true
+  apt: name=ansible state=latest
 
 - name: "Create config dir: ../.aws/"
   file: >
