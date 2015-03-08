@@ -1,5 +1,5 @@
 ---
-#This Playbook deploys a KairosDB cluster on Amazon EC2
+#This Playbook deploys a fio run on an EC2 instance and uploads the results to S3
 
 - name: Test 1
   hosts: localhost
