@@ -98,7 +98,7 @@
   - group_vars/ubuntu
   tasks:
     - name: Gather and save machine facts
-      shell: ansible all -m setup --tree /tmp/facts -i /home/ubuntu/workloads/inv > /home/ubuntu/facts.txt
+      shell: ansible all -m setup --tree /tmp/facts -i /home/ubuntu/workloads/inv > /home/ubuntu/results/facts.txt
 
 - name: Execute FIO benchmark
   hosts: testbed
