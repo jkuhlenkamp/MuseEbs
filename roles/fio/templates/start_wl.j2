@@ -5,15 +5,18 @@
 # Add inital sleep time
 # sleep 3000
 
+# Go to result dir
+cd {{ result_dir }}
+
 # Write a timestamp to the log before fio run begins
 now=$(date +'%Y_%m_%d-%H_%M_%S')
 echo $now > {{ result_dir }}/result.log
 
 # Execute workload in result dir and again log timestamp after finishing
-cd {{ result_dir }}
 fio {{ workload_dir }}/{{ wl_name }} >> {{ result_dir }}/result.log
-cd {{ home_dir }}
+now=$(date +'%Y_%m_%d-%H_%M_%S')
 echo $now >> {{ result_dir }}/result.log
+cd {{ home_dir }}
 
 # Upload results to S3
 s3_dir=s3://{{ aws_s3_bucket }}/fio/{{ aws_region }}/{{ aws_instance_type  | replace('.','_')}}/{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] | replace('.','_') }}/$now/
