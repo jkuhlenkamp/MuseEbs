@@ -21,12 +21,16 @@ cd {{ home_dir }}
 # Upload results to S3
 s3_dir=s3://{{ aws_s3_bucket }}/fio/{{ aws_region }}/{{ aws_instance_type  | replace('.','_')}}/{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] | replace('.','_') }}/$now/
 
-aws s3 cp {{ home_dir }}/result.log $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/bw_bw.log $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/iops_iops.log $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/lat_clat.log $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/lat_lat.log $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/lat_slat.log $s3_dir --region=eu-central-1
-aws s3 cp {{ workload_dir }}/{{ wl_name }} $s3_dir --region=eu-central-1
-aws s3 cp {{ home_dir }}/facts.txt $s3_dir --region=eu-central-1
+# Move job to results dir
+mv {{ workload_dir }}/{{ wl_name }} {{ result_dir }}
+
+# Pack results
+tar czf /home/ubuntu/results.tar.gz /home/ubuntu/results
+
+# Move results into results dir
+mv /home/ubuntu/results.tar.gz /home/ubuntu/results
+
+#Copy all in dir "results" to s3
+aws s3 cp {{ result_dir }}/ $s3_dir --region=eu-central-1 --recursive
+
 exit
