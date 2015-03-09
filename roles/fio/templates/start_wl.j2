@@ -31,6 +31,6 @@ tar czf /home/ubuntu/results.tar.gz /home/ubuntu/results
 mv /home/ubuntu/results.tar.gz /home/ubuntu/results
 
 #Copy all in dir "results" to s3
-aws s3 cp {{ result_dir }}/ $s3_dir --region=eu-central-1 --recursive
+aws s3 cp {{ result_dir }}/ $s3_dir --region={{ s3_region }} --recursive
 
 exit
