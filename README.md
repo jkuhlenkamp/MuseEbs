@@ -9,7 +9,7 @@ Requires Ansible and Boto
 2. Export Credentials "export AWS_ACCESS_KEY_ID=xxx" "export AWS_SECRET_ACCESS_KEY=xxx"  
 3. Adapt "fiobs/exp/env.yml"  
 3.1 Choose workload job file  
-3.2 Adapt the AWS settings: aws_group_id, aws_vpc_subnet_id, aws_region, aws_instance_type, aws_image_id, aws_instance_number, aws_tag_prefix, aws_ebs_optimized
+3.2 Adapt the AWS settings: aws_group_id, aws_vpc_subnet_id, aws_region, aws_instance_type, aws_image_id, aws_instance_number, aws_tag_prefix, aws_ebs_optimized  
 3.3 Adapt the storage configuration  
 
 4. Start playbook
