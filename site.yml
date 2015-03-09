@@ -22,7 +22,7 @@
         vpc_subnet_id: "{{ aws_vpc_subnet_id }}"
         region: "{{ aws_region }}"
         instance_type: "{{ aws_instance_type }}"
-        #ebs_optimized: yes
+        ebs_optimized: "{{ ebs_optimized }}"
         image: "{{ aws_image_id }}"
         exact_count: "{{ aws_instance_number }}"
         wait: yes
