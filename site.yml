@@ -111,4 +111,25 @@
     - name: Start workload executor script in screen
       shell: nohup /home/ubuntu/workloads/start_wl.sh 0<&- &>/dev/null &
 
-# Copy result files
+- name: Wait a specific time period
+  hosts: localhost
+  gather_facts: False
+  vars_files:
+  - exp/env.yml
+  tasks:
+    - name: Wait for fio test to finish
+      pause: "seconds={{ waiting_time_for_fio }}"
+
+- name: Terminate instance
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files: 
+  - exp/env.yml
+  tasks:
+    - name: Terminate the instance
+      ec2:
+        instance_ids: "{{ ec2.instance_ids }}"
+        region: "{{ aws_region }}"
+        state: absent
+        wait: true
