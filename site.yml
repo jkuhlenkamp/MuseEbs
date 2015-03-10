@@ -59,14 +59,14 @@
   tasks:
     - set_fact:
         sutdevice="/dev/md0"
-      when: {ebs_volumes | length > 1​}
+      when: ebs_volumes|length > 1
     - include: tasks/raid.yml
-      when: {ebs_volumes | length > 1​}
+      when: ebs_volumes|length > 1
     - set_fact:
         sutdevice="/dev/xvdb"
-      when: {ebs_volumes | length == 1​}
+      when: ebs_volumes|length == 1 
     - include: tasks/mounted_dev.yml
-      when: {ebs_volumes | length == 1​}
+      when: ebs_volumes|length == 1
 
 - name: Install and configure FIO benchmark
   hosts: testbed
