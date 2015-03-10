@@ -18,4 +18,5 @@ Requires Ansible and Boto
 	-> ansible-playbook -i inv/ site.yml --private-key=/Users/jk/jk_f_2015.pem --extra-vars "aws_access_key_id=$AWS_ACCESS_KEY_ID aws_secret_access_key=$AWS_SECRET_ACCESS_KEY"
 	
 IMPORTANT  
-Carefully choose aws_tag_prefix for parallel runs. Instances get terminated regarding the aws_region and aws_tag_prefix
+- Carefully choose aws_tag_prefix for parallel runs. Instances get terminated regarding the aws_region and aws_tag_prefix  
+- Export your credentials for every terminal  
