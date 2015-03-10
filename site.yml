@@ -120,7 +120,7 @@
     - name: Wait for fio test to finish
       pause: "seconds={{ waiting_time_for_fio }}"
 
-- name: Terminate instance
+- name: Terminate instances for the specific tags
   hosts: localhost
   connection: local
   gather_facts: False
@@ -133,3 +133,9 @@
         region: "{{ aws_region }}"
         state: absent
         wait: true
+        instance_tags:
+          Name: fio
+          exp: "{{ aws_tag_prefix }}"
+        count_tag:
+          Name: fio
+          exp: "{{ aws_tag_prefix }}"
