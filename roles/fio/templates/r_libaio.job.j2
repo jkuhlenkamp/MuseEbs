@@ -6,11 +6,11 @@ directory={{ home_dir }}/fio
 log_avg_msec=500
 ioengine=libaio
 iodepth=16
-rw=read
+rw= {{ rw }}
 filesize=1G
 direct=1
 invalidate=1
-blocksize=4k
+blocksize={{ blocksize }}
 time_based
 filename=fio_file
 
