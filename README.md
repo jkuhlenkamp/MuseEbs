@@ -1,7 +1,9 @@
 Ansible Playbook to
 - provision an EC2-instance with custom storage configuration
+- gather system facts
 - run fio tests
 - transfer results to S3 bucket
+- terminate the instances 
 
 Requires Ansible and Boto
 
@@ -15,3 +17,5 @@ Requires Ansible and Boto
 4. Start playbook
 	-> ansible-playbook -i inv/ site.yml --private-key=/Users/jk/jk_f_2015.pem --extra-vars "aws_access_key_id=$AWS_ACCESS_KEY_ID aws_secret_access_key=$AWS_SECRET_ACCESS_KEY"
 	
+IMPORTANT  
+Carefully choose aws_tag_prefix for parallel runs. Instances get terminated regarding the aws_region and aws_tag_prefix
