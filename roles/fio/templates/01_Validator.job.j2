@@ -1,4 +1,4 @@
-{# file: /roles/fio/templates/01_Validator_128k.job.j2 #}
+{# file: /roles/fio/templates/01_Validator.job.j2 #}
 {# Jinja2 template to render a fio workload file #}
 # -- start job file --
 [global]
@@ -9,16 +9,16 @@ iodepth=16
 filesize=512M
 direct=1
 invalidate=1
-blocksize=128k
+blocksize={{ blocksize }}
 time_based
 nrfiles=10
 numjobs=2
 
-[run - random read]
+[run - {{ rw }}]
 runtime=600
-rw=randread
-write_iops_log=iops
-write_bw_log=bw
-write_lat_log=lat
+rw={{ rw }}
+write_iops_log=iops{{ rw }}
+write_bw_log=bw{{ rw }}
+write_lat_log=lat{{ rw }}
 
 # -- end job file --
