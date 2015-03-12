@@ -58,10 +58,13 @@
     owner={{ user }}
     group={{ user }}
     mode=0664
-
+    
 - name: "Install package: python-pip"
   sudo: true
-  apt: name=python-pip state=present
+  apt: >
+    name=python-pip
+    state=latest
+    update_cache=yes
 
 - name: "Install package: boto"
   sudo: true
