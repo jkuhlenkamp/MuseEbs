@@ -6,12 +6,14 @@
 #	REQUIREMENTS:
 #	- Workloads are present in:
 #		$WORKLOADS/load/*
+#		$WORKLOADS/burn/*
 #		$WORKLOADS/run/*
 #	- Result dir is accessible
 #	- S3 uploads can be executed
 #
 
 LOAD_WL_DIR={{ workload_dir }}/load
+BURN_WL_DIR={{ workload_dir }}/burn
 RUN_WL_DIR={{ workload_dir }}/run
 
 # Upload results to S3
@@ -19,6 +21,24 @@ s3_dir=s3://{{ aws_s3_bucket }}/fioebs/{{ exp_name }}/{{ aws_region }}/{{ aws_in
 
 ### LOAD PHASE ###
 for w in $LOAD_WL_DIR/*
+do
+  # echo "Processing workload file: $w"
+  # Create result folder
+  wl_name=$(basename $w .job)
+  res_dir={{ result_dir }}/$wl_name
+  res_file=$res_dir/res_$wl_name
+
+  mkdir $res_dir
+  touch $res_file
+
+  cd $res_dir
+  fio $w >> $res_file
+
+  cp $w $res_dir
+done
+
+### BURN PHASE ###
+for w in $BURN_WL_DIR/*
 do
   # echo "Processing workload file: $w"
   # Create result folder

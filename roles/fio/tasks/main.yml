@@ -30,6 +30,15 @@
     group={{ user }}
     mode="0755"
 
+- name: "Create workload dir: ../workloads/fio/burn"
+  file: >
+    path={{ workload_dir }}/burn
+    state=directory
+    recurse=yes
+    owner={{ user }}
+    group={{ user }}
+    mode="0755"
+
 - name: "Create workload dir: ../workloads/fio/run"
   file: >
     path={{ workload_dir }}/run
@@ -57,10 +66,18 @@
 ##########################################################
 # Create workloads
 
-- name: "Create load workload files for load phase"
+- name: "Create fio workload files for phase: LOAD"
   template: >
     src="ninja-p1-load.j2"
-    dest="{{ workload_dir }}/load/wl_load.job"
+    dest="{{ workload_dir }}/load/load.job"
+    owner={{ user }}
+    group={{ user }}
+    mode=0777
+
+- name: "Create fio workload files for phase: BURN"
+  template: >
+    src="ninja-p1-burn.j2"
+    dest="{{ workload_dir }}/burn/burn.job"
     owner={{ user }}
     group={{ user }}
     mode=0777
@@ -68,7 +85,7 @@
 # Threads: [1, 2, 4, 8, 12, 16, 24, 32, 48, 64]
 # File access patterns: [randread, write]
 
-- name: "Create fio workload files for run phase"
+- name: "Create fio workload files for phase: RUN"
   template: >
     src="ninja-p1-run.j2"
     dest="{{ workload_dir }}/run/run-{{ item.access }}-thr_{{ item.threads }}.job"
