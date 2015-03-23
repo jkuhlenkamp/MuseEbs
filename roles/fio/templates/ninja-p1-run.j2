@@ -17,17 +17,17 @@ refill_buffers={{ fio_refill_buffers }}
 invalidate={{ fio_invalidate }}
 
 numjobs={{ item.threads }}
-blocksize={{ fio_blocksize }}
+blocksize={{ item.bs }}
 time_based={{ fio_time_based }}
-ramp_time=60
+ramp_time=10
 runtime={{ fio_runtime }}
 thread=1
 
 log_avg_msec=500
 group_reporting=1
 
-[run-{{ item.access }}-thr_{{ item.threads }}]
-write_iops_log=run-{{ item.access }}-thr_{{ item.threads }}
-write_bw_log=run-{{ item.access }}-thr_{{ item.threads }}
-write_lat_log=run-{{ item.access }}-thr_{{ item.threads }}
+[run-{{ item.access }}-thr_{{ item.threads }}-bs_{{ item.bs }}]
+write_iops_log=run-{{ item.access }}-thr_{{ item.threads }}-bs_{{ item.bs }}
+write_bw_log=run-{{ item.access }}-thr_{{ item.threads }}-bs_{{ item.bs }}
+write_lat_log=run-{{ item.access }}-thr_{{ item.threads }}-bs_{{ item.bs }}
 # -- end job file --
