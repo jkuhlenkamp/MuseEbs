@@ -15,7 +15,7 @@
     fstype=ext4
     dev="{{ sutdevice }}"
     force=no
-    opts="-b 4096"
+    opts="-b {{ fs_blocksize }}"
   when: is_mounted.rc != 0
 
 - name: Create mount dir '/home/ubuntu/fio'

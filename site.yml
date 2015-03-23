@@ -59,11 +59,13 @@
   tasks:
     - set_fact:
         sutdevice="/dev/md0"
+        fs_blocksize="524288"
       when: ebs_volumes|length > 1
     - include: tasks/raid.yml
       when: ebs_volumes|length > 1
     - set_fact:
         sutdevice="/dev/xvdb"
+        fs_blocksize="4096"
       when: ebs_volumes|length == 1 
     - include: tasks/mounted_dev.yml
       when: ebs_volumes|length == 1
