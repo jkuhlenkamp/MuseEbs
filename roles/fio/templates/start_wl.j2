@@ -8,6 +8,19 @@
 # Go to result dir
 cd {{ result_dir }}
 
+### LOAD PHASE ###
+# Write a timestamp to the log before fio load begins
+now=$(date +'%Y_%m_%d-%H_%M_%S')
+echo $now > {{ result_dir }}/result_load.log
+
+# Execute workload in result dir and log timestamp
+fio {{ workload_dir }}/wl_load.job >> {{ result_dir }}/result_load.log
+now=$(date +'%Y_%m_%d-%H_%M_%S')
+echo $now >> {{ result_dir }}/result_load.log
+cd {{ home_dir }}
+
+
+### RUN PHASE ###
 # Write a timestamp to the log before fio run begins
 now=$(date +'%Y_%m_%d-%H_%M_%S')
 echo $now > {{ result_dir }}/result.log
@@ -18,8 +31,12 @@ now=$(date +'%Y_%m_%d-%H_%M_%S')
 echo $now >> {{ result_dir }}/result.log
 cd {{ home_dir }}
 
+### COLLECTION PHASE ###
 # Upload results to S3
 s3_dir=s3://{{ aws_s3_bucket }}/fioebs/{{ exp_name }}/{{ aws_region }}/{{ aws_instance_type  | replace('.','_')}}/{{ ebs_device_type }}/{{ fio_nrfiles }}_files/{{ fio_filesize }}_filesize/{{ fio_ioengine }}_ioeng/{{ fio_numjobs }}_jobs/{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] | replace('.','_') }}
+
+# Move job to results dir
+mv {{ workload_dir }}/wl_load.job {{ result_dir }}
 
 # Move job to results dir
 mv {{ workload_dir }}/{{ wl_name }} {{ result_dir }}

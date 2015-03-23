@@ -16,18 +16,20 @@ direct={{ fio_direct }}
 refill_buffers={{ fio_refill_buffers }}
 #invalidate={{ fio_invalidate }}
 
-numjobs={{ fio_numjobs }}
-blocksize={{ fio_blocksize }}
-size={{ fio_size }}
+#numjobs={{ fio_numjobs }}
+#blocksize={{ fio_blocksize }}
+numjobs=1
+blocksize=128K
+size={{ fio_filesize }}
 #time_based={{ fio_time_based }}
 #runtime={{ fio_runtime }}
 
 log_avg_msec=500
 group_reporting=1
 
-[run - {{ fio_rw }}]
-write_iops_log=iops_{{ fio_rw }}_run
-write_bw_log=bw_{{ fio_rw }}_run
-write_lat_log=lat_{{ fio_rw }}_run
+[load - {{ fio_rw }}]
+write_iops_log=iops_{{ fio_rw }}_load
+write_bw_log=bw_{{ fio_rw }}_load
+write_lat_log=lat_{{ fio_rw }}_load
 
 # -- end job file --

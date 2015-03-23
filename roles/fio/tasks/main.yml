@@ -3,8 +3,7 @@
 
 ##########################################################
 # Create required directories
-
-- name: "Create result dir: ../results/"
+- name: "Create result dir: ../results"
   file: >
     path={{ result_dir }}
     state=directory
@@ -22,26 +21,85 @@
     group={{ user }}
     mode="0755"
 
+- name: "Create workload dir: ../workloads/fio/load"
+  file: >
+    path={{ workload_dir }}/load
+    state=directory
+    recurse=yes
+    owner={{ user }}
+    group={{ user }}
+    mode="0755"
+
+- name: "Create workload dir: ../workloads/fio/run"
+  file: >
+    path={{ workload_dir }}/run
+    state=directory
+    recurse=yes
+    owner={{ user }}
+    group={{ user }}
+    mode="0755"
+
 - name: Install fio via apt
   sudo: true
-  apt: name=fio state=present
+  apt: >
+    name=fio 
+    state=present
+    update_cache=yes
 
-- name: "Create workload executor script: start_wl.sh"
+- name: "Create workload executor script: exp_exe.sh"
   template: >
-    src=start_wl.j2
-    dest="{{ workload_dir }}/start_wl.sh"
+    src=exe_exp.sh.j2
+    dest="{{ workload_dir }}/exe_exp.sh"
     owner={{ user }}
     group={{ user }}
     mode=0777
 
-- name: "Create worklaod file: wl.job"
+##########################################################
+# Create workloads
+
+- name: "Create load workload files for load phase"
   template: >
-    src="{{ exe_wl_template }}.j2"
-    dest="{{ workload_dir }}/wl.job"
+    src="ninja-p1-load.j2"
+    dest="{{ workload_dir }}/load/wl_load.job"
     owner={{ user }}
     group={{ user }}
     mode=0777
+
+# Threads: [1, 2, 4, 8, 12, 16, 24, 32, 48, 64]
+# File access patterns: [randread, write]
+
+- name: "Create fio workload files for run phase"
+  template: >
+    src="ninja-p1-run.j2"
+    dest="{{ workload_dir }}/run/run-{{ item.access }}-thr_{{ item.threads }}.job"
+    owner={{ user }}
+    group={{ user }}
+    mode=0777
+  with_items:
+    - { access: 'write', threads: '1' }
+    - { access: 'write', threads: '2' }
+    - { access: 'write', threads: '4' }
+    - { access: 'write', threads: '8' }
+    - { access: 'write', threads: '12' }
+    - { access: 'write', threads: '16' }
+    - { access: 'write', threads: '24' }
+    - { access: 'write', threads: '32' }
+    - { access: 'write', threads: '48' }
+    - { access: 'write', threads: '64' }
+    - { access: 'randread', threads: '1' }
+    - { access: 'randread', threads: '2' }
+    - { access: 'randread', threads: '4' }
+    - { access: 'randread', threads: '8' }
+    - { access: 'randread', threads: '12' }
+    - { access: 'randread', threads: '16' }
+    - { access: 'randread', threads: '24' }
+    - { access: 'randread', threads: '32' }
+    - { access: 'randread', threads: '48' }
+    - { access: 'randread', threads: '64' }
     
+##########################################################
+# Configure result upload
+
 - name: "Create inv dir: ../workloads/inv"
   file: >
     path={{ workload_dir }}/inv

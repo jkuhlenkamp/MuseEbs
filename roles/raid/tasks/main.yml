@@ -14,7 +14,7 @@
 
 - name: Create device
   sudo: yes
-  shell: "mkfs.ext4 -b 4096 /dev/md0"
+  shell: "mkfs.ext4 -b ${{ fs_blocksize }} /dev/md0"
 
 - name: Create mount dir '/home/ubuntu/fio'
   file: >

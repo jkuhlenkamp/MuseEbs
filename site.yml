@@ -111,7 +111,7 @@
   - group_vars/ubuntu
   tasks:
     - name: Start workload executor script in screen
-      shell: nohup /home/ubuntu/workloads/start_wl.sh 0<&- &>/dev/null &
+      shell: nohup /home/ubuntu/workloads/exe_exp.sh 0<&- &>/dev/null &
 
 - name: Wait a specific time period
   hosts: localhost
