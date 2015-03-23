@@ -83,36 +83,57 @@
     mode=0777
 
 # Threads: [1, 2, 4, 8, 12, 16, 24, 32, 48, 64]
+# Request blocksize: [4K, 4M]
 # File access patterns: [randread, write]
 
 - name: "Create fio workload files for phase: RUN"
   template: >
     src="ninja-p1-run.j2"
-    dest="{{ workload_dir }}/run/run-{{ item.access }}-thr_{{ item.threads }}.job"
+    dest="{{ workload_dir }}/run/run-{{ item.access }}-bs_{{ item.bs }}-thr_{{ item.threads }}.job"
     owner={{ user }}
     group={{ user }}
     mode=0777
   with_items:
-    - { access: 'write', threads: '1' }
-    - { access: 'write', threads: '2' }
-    - { access: 'write', threads: '4' }
-    - { access: 'write', threads: '8' }
-    - { access: 'write', threads: '12' }
-    - { access: 'write', threads: '16' }
-    - { access: 'write', threads: '24' }
-    - { access: 'write', threads: '32' }
-    - { access: 'write', threads: '48' }
-    - { access: 'write', threads: '64' }
-    - { access: 'randread', threads: '1' }
-    - { access: 'randread', threads: '2' }
-    - { access: 'randread', threads: '4' }
-    - { access: 'randread', threads: '8' }
-    - { access: 'randread', threads: '12' }
-    - { access: 'randread', threads: '16' }
-    - { access: 'randread', threads: '24' }
-    - { access: 'randread', threads: '32' }
-    - { access: 'randread', threads: '48' }
-    - { access: 'randread', threads: '64' }
+    - { access: 'write', threads: '1', bs: '4K' }
+    - { access: 'write', threads: '2', bs: '4K' }
+    - { access: 'write', threads: '4', bs: '4K' }
+    - { access: 'write', threads: '8', bs: '4K' }
+    - { access: 'write', threads: '12', bs: '4K' }
+    - { access: 'write', threads: '16', bs: '4K' }
+    - { access: 'write', threads: '24', bs: '4K' }
+    - { access: 'write', threads: '32', bs: '4K' }
+    - { access: 'write', threads: '48', bs: '4K' }
+    - { access: 'write', threads: '64', bs: '4K' }
+    - { access: 'randread', threads: '1', bs: '4K' }
+    - { access: 'randread', threads: '2', bs: '4K' }
+    - { access: 'randread', threads: '4', bs: '4K' }
+    - { access: 'randread', threads: '8', bs: '4K' }
+    - { access: 'randread', threads: '12', bs: '4K' }
+    - { access: 'randread', threads: '16', bs: '4K' }
+    - { access: 'randread', threads: '24', bs: '4K' }
+    - { access: 'randread', threads: '32', bs: '4K' }
+    - { access: 'randread', threads: '48', bs: '4K' }
+    - { access: 'randread', threads: '64', bs: '4K' }
+    - { access: 'write', threads: '1', bs: '4M' }
+    - { access: 'write', threads: '2', bs: '4M' }
+    - { access: 'write', threads: '4', bs: '4M' }
+    - { access: 'write', threads: '8', bs: '4M' }
+    - { access: 'write', threads: '12', bs: '4M' }
+    - { access: 'write', threads: '16', bs: '4M' }
+    - { access: 'write', threads: '24', bs: '4M' }
+    - { access: 'write', threads: '32', bs: '4M' }
+    - { access: 'write', threads: '48', bs: '4M' }
+    - { access: 'write', threads: '64', bs: '4M' }
+    - { access: 'randread', threads: '1', bs: '4M' }
+    - { access: 'randread', threads: '2', bs: '4M' }
+    - { access: 'randread', threads: '4', bs: '4M' }
+    - { access: 'randread', threads: '8', bs: '4M' }
+    - { access: 'randread', threads: '12', bs: '4M' }
+    - { access: 'randread', threads: '16', bs: '4M' }
+    - { access: 'randread', threads: '24', bs: '4M' }
+    - { access: 'randread', threads: '32', bs: '4M' }
+    - { access: 'randread', threads: '48', bs: '4M' }
+    - { access: 'randread', threads: '64', bs: '4M' }
     
 ##########################################################
 # Configure result upload
