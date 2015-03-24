@@ -34,7 +34,7 @@
     name=/home/ubuntu/fio
     src="{{ sutdevice }}"
     fstype=ext4
-    opts=noatime,nodiratime,discard
+    opts=noatime,nodiratime,discard,nobarrier
     state=mounted
   when: is_mounted.rc != 0
 
