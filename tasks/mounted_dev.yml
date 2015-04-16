@@ -14,7 +14,7 @@
   filesystem: >
     fstype=ext4
     dev="{{ sutdevice }}"
-    force=no
+    force=yes
     opts="-b {{ fs_blocksize }}"
   when: is_mounted.rc != 0
 
